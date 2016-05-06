@@ -1,17 +1,18 @@
-ThingSpeak WinRT Library
+ThingSpeak .NET Library
 ================
 
-This is a WinRT Class library for Thingspeak. 
+This is a .NET Class library for ThingSpeak. 
 
 #### Dependencies
 ---
 
-This library depends on Json.NET (http://james.newtonking.com/json). The greatest JSON library I know and a donation is really appreciated to the great work from James Newton-King.
+This library depends on Json.NET (http://james.newtonking.com/json).
 
 #### Prerequisites
 ---
 
-You need a ThingSpeak Account (https://thingspeak.com/) to get started with the library.
+You do not need ThingSpeak Account to try using this library. There are a lot of public channels that allow anonymous
+data retrieval. But if you want to create your own channel and send data to it, you'll need a ThingSpeak Account (https://thingspeak.com/).
 
 
 ### Example Usage
@@ -19,7 +20,7 @@ You need a ThingSpeak Account (https://thingspeak.com/) to get started with the 
 You have to instantiate the Class with the constructor and provide a bool value if you want to make all communications with or without SSL. After that you are ready to get started.
 
 ```c#
-var client = new ThingSpeakClient(false);
+var client = new ThingSpeakClient(sslRequired: true);
 ```
 
 ##### Create an feed inside a Channel
@@ -29,7 +30,7 @@ After you have created a Channel on the ThingSpeak Website you could add a new f
 var dataFeed = new ThingSpeakFeed { Field1 = "58.27", Field2 = "32.59" };
 dataFeed = await client.UpdateFeedAsync("<Your Write API Key>", dataFeed);
 ```
-If there occurs any error, the dataFeed.Id entry will be null. If everyhting works ok, the Id of the entry will be what Id is returned from ThingSpeak.
+If there occurs any error, the dataFeed.Id entry will be null. If everything works ok, the Id of the entry will be what Id is returned from ThingSpeak.
 
 ##### Get all feeds from a Channel
 
