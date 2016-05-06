@@ -1,5 +1,7 @@
-ThingSpeak .NET Library
+ThingSpeak .NET Library. 
 ================
+
+Work on this library is in progress, currently it is not compilable.
 
 This is a .NET Class library for ThingSpeak. 
 
