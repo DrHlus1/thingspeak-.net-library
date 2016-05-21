@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Web.Http;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using Newtonsoft.Json;
-using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
 namespace ThingSpeakWinRT
 {
@@ -132,15 +133,15 @@ namespace ThingSpeakWinRT
 
             using (var httpClient = new HttpClient())
             {
-                var stringContent = new HttpStringContent(request, UnicodeEncoding.Utf8,
+                var stringContent = new StringContent(request, Encoding.UTF8,
                     "application/x-www-form-urlencoded");
                 var httpResponse = await httpClient.PostAsync(new Uri(_requestUri), stringContent);
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
                     feedEntry.EntryId =
                         Convert.ToInt32(
-                            JsonConvert.DeserializeObject<ThingSpeakFeed>(httpResponse.Content.ToString()).EntryId);
+                            JsonConvert.DeserializeObject<ThingSpeakFeed>(await httpResponse.Content.ReadAsStringAsync()).EntryId);
                 }
                 else
                 {
@@ -184,13 +185,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(await httpResponse.Content.ReadAsStringAsync());
                     if (entry.CreatedAt != null)
                     {
                         entry.CreatedAt = entry.CreatedAt.Value.ToLocalTime();
@@ -235,13 +236,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(await httpResponse.Content.ReadAsStringAsync());
                     foreach (var feed in entry.Feeds.Where(feed => feed.CreatedAt != null))
                     {
                         feed.CreatedAt = feed.CreatedAt.Value.ToLocalTime();
@@ -284,13 +285,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(await httpResponse.Content.ReadAsStringAsync());
                     foreach (var feed in entry.Feeds.Where(feed => feed.CreatedAt != null))
                     {
                         feed.CreatedAt = feed.CreatedAt.Value.ToLocalTime();
@@ -333,13 +334,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(await httpResponse.Content.ReadAsStringAsync());
                     if (entry.CreatedAt != null)
                     {
                         entry.CreatedAt = entry.CreatedAt.Value.ToLocalTime();
@@ -379,13 +380,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakData>(await httpResponse.Content.ReadAsStringAsync());
                     foreach (var feed in entry.Feeds.Where(feed => feed.CreatedAt != null))
                     {
                         feed.CreatedAt = feed.CreatedAt.Value.ToLocalTime();
@@ -429,13 +430,13 @@ namespace ThingSpeakWinRT
                         Method = HttpMethod.Get
                     };
                     request.Headers.Add("X-THINGSPEAKAPIKEY", readApiKey);
-                    httpResponse = await httpClient.SendRequestAsync(request);
+                    httpResponse = await httpClient.SendAsync(request);
                 }
 
 
-                if (httpResponse.StatusCode == HttpStatusCode.Ok)
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(httpResponse.Content.ToString());
+                    var entry = JsonConvert.DeserializeObject<ThingSpeakFeed>(await httpResponse.Content.ReadAsStringAsync());
                     if (entry.CreatedAt != null)
                     {
                         entry.CreatedAt = entry.CreatedAt.Value.ToLocalTime();
@@ -467,7 +468,7 @@ namespace ThingSpeakWinRT
             using (var httpClient = new HttpClient())
             {
                 var request = "api_key=" + apiKey + "&status=" + status;
-                var stringContent = new HttpStringContent(request, UnicodeEncoding.Utf8,
+                var stringContent = new StringContent(request, Encoding.UTF8,
                     "application/x-www-form-urlencoded");
                 var httpResponse = await httpClient.PostAsync(new Uri(_requestUri), stringContent);
                 return httpResponse.IsSuccessStatusCode;
@@ -489,7 +490,7 @@ namespace ThingSpeakWinRT
             using (var httpClient = new HttpClient())
             {
                 var request = "api_key=" + apiKey + "&message=" + message;
-                var stringContent = new HttpStringContent(request, UnicodeEncoding.Utf8,
+                var stringContent = new StringContent(request, Encoding.UTF8,
                     "application/x-www-form-urlencoded");
                 var httpResponse = await httpClient.PostAsync(new Uri(_requestUri), stringContent);
                 return httpResponse.IsSuccessStatusCode;
