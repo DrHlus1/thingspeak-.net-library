@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+
+//TODO consolidate namespace names
+using ThingSpeakDotNetLibrary;
 
 namespace ThingSpeakWinRT
 {
@@ -210,14 +214,29 @@ namespace ThingSpeakWinRT
         /// <param name="fieldId">Field ID</param>
         /// <param name="status">Include status update in feed</param>
         /// <param name="location">Include latitude, longitude and elevation in feed</param>
+        /// <param name="start_date">Start date</param>
+        /// <param name="end_date">End date. If not specified, ThingSpeak default is used (current date)</param>
+        /// <param name="results">Count of results, 8000 max. If not specified, ThingSpeak default is used (at a moment of writing 100).</param>
         /// <returns>List of all data entries read</returns>
         public async Task<ThingSpeakData> ReadFieldsAsync(string readApiKey, int channelId, int fieldId,
-            bool status = false,
-            bool location = false)
+            bool status = false, bool location = false,
+            DateTime? start_date = null, DateTime? end_date = null, 
+            Int32? results = null)
         {
+            // TODO verify parameters start_date and end_date
+            // TODO verify parameter result
             //Create URI
+            var parameters = new List<KeyValuePair<String, Object>>
+                {
+                    new KeyValuePair<String, Object>("status", status),
+                    new KeyValuePair<String, Object>("location", location),
+                    new KeyValuePair<String, Object>("start", start_date),
+                    new KeyValuePair<String, Object>("end", end_date),
+                    new KeyValuePair<String, Object>("results", results),
+                };
+
             _requestUri = _thingSpeakHost + "/channels/" + channelId + "/fields/" + fieldId + ".json" +
-                          ConstructQueryString(status, location);
+                          QueryStringBuilder.Build(parameters);
 
             //Start request
             using (var httpClient = new HttpClient())
@@ -402,7 +421,7 @@ namespace ThingSpeakWinRT
         /// </summary>
         /// <param name="readApiKey">Read API Key for the channel to read (null if channel is public)</param>
         /// <param name="channelId">Channel ID</param>
-        /// <param name="entryId">Channel ID</param>
+        /// <param name="entryId">Entry ID</param>
         /// <param name="status">Include status update in feed</param>
         /// <param name="location">Include latitude, longitude and elevation in feed</param>
         /// <returns>List of all data entries read</returns>

@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingSpeakDotNet", "ThingSpeakDotNet\ThingSpeakDotNet.csproj", "{34FCC401-7E09-4C5C-830E-F1496FFA0C0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{0107950C-13B6-4CA9-BFFF-64E062A7BA26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{34FCC401-7E09-4C5C-830E-F1496FFA0C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34FCC401-7E09-4C5C-830E-F1496FFA0C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34FCC401-7E09-4C5C-830E-F1496FFA0C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0107950C-13B6-4CA9-BFFF-64E062A7BA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0107950C-13B6-4CA9-BFFF-64E062A7BA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0107950C-13B6-4CA9-BFFF-64E062A7BA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0107950C-13B6-4CA9-BFFF-64E062A7BA26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
